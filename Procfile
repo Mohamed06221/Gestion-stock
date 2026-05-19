@@ -1,2 +1,2 @@
-release: python manage.py migrate
-web: gunicorn gestion_stock.wsgi
+release: python manage.py migrate --noinput
+web: gunicorn gestion_stock.wsgi:application
