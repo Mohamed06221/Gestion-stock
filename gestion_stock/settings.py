@@ -4,7 +4,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 SECRET_KEY = 'django-insecure-change-me-in-production'
-DEBUG = True
+DEBUG = False
 
 # IMPORTANT FIX RAILWAY
 ALLOWED_HOSTS = ['.railway.app']
