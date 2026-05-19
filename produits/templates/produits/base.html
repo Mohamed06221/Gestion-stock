@@ -11,37 +11,61 @@
 <body>
 
     <!-- Navbar -->
-    <div class="navbar bg-base-300 px-6">
+    <div class="navbar bg-base-300 px-4">
         <div class="flex-1">
             <a class="text-xl font-bold">🏪 Gestion Stock</a>
         </div>
-        <div class="flex gap-4">
-            <a href="{% url 'liste_produit' %}" class="btn btn-ghost">Produits</a>
+
+        <!-- Menu hamburger sur mobile -->
+        <div class="flex md:hidden">
+            <button onclick="document.getElementById('menu').classList.toggle('hidden')" class="btn btn-ghost btn-sm">
+                ☰
+            </button>
+        </div>
+
+        <!-- Menu normal sur desktop -->
+        <div class="hidden md:flex gap-2">
+            <a href="{% url 'liste_produit' %}" class="btn btn-ghost btn-sm">Produits</a>
             {% if request.user.is_staff %}
-                <a href="{% url 'liste_categorie' %}" class="btn btn-ghost">Catégories</a>
+                <a href="{% url 'liste_categorie' %}" class="btn btn-ghost btn-sm">Catégories</a>
             {% endif %}
-            <a href="{% url 'liste_entrees' %}" class="btn btn-ghost">Entrées</a>
-            <a href="{% url 'liste_sorti' %}" class="btn btn-ghost">Sorties</a>
+            <a href="{% url 'liste_entrees' %}" class="btn btn-ghost btn-sm">Entrées</a>
+            <a href="{% url 'liste_sorti' %}" class="btn btn-ghost btn-sm">Sorties</a>
             {% if request.user.is_superuser %}
-                <a href="{% url 'liste_utilisateurs' %}" class="btn btn-ghost">Utilisateurs</a>
+                <a href="{% url 'liste_utilisateurs' %}" class="btn btn-ghost btn-sm">Utilisateurs</a>
             {% endif %}
             <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
-            <button type="submit" class="btn btn-error btn-sm">Déconnexion</button>
-</form>
-
+                <button type="submit" class="btn btn-error btn-sm">Déconnexion</button>
+            </form>
         </div>
     </div>
 
-    <div class="flex justify-center mt-10">
-        <div class="flex flex-col w-2/3 bg-base-200 rounded-xl p-6">
+    <!-- Menu mobile déroulant -->
+    <div id="menu" class="hidden md:hidden bg-base-300 px-4 py-2 flex flex-col gap-2">
+        <a href="{% url 'liste_produit' %}" class="btn btn-ghost btn-sm w-full">Produits</a>
+        {% if request.user.is_staff %}
+            <a href="{% url 'liste_categorie' %}" class="btn btn-ghost btn-sm w-full">Catégories</a>
+        {% endif %}
+        <a href="{% url 'liste_entrees' %}" class="btn btn-ghost btn-sm w-full">Entrées</a>
+        <a href="{% url 'liste_sorti' %}" class="btn btn-ghost btn-sm w-full">Sorties</a>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'liste_utilisateurs' %}" class="btn btn-ghost btn-sm w-full">Utilisateurs</a>
+        {% endif %}
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-error btn-sm w-full">Déconnexion</button>
+        </form>
+    </div>
+
+    <div class="flex justify-center mt-6 px-4">
+        <div class="flex flex-col w-full md:w-2/3 bg-base-200 rounded-xl p-4 md:p-6">
             <div class="w-full h-fit">
                 {% block content %}
                 {% endblock %}
             </div>
         </div>
     </div>
-    
 
 </body>
 </html>
