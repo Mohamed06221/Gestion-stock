@@ -1,16 +1,34 @@
 from pathlib import Path
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# =========================
 # SECURITY
-SECRET_KEY = 'django-insecure-change-me-in-production'
+# =========================
+
+SECRET_KEY = os.environ.get("SECRET_KEY", "django-insecure-change-me")
+
 DEBUG = False
 
-# IMPORTANT FIX RAILWAY
-ALLOWED_HOSTS = ['.railway.app']
+ALLOWED_HOSTS = [
+    "gestion-stock-production-aed7.up.railway.app",
+    ".railway.app",
+]
 
+# =========================
+# CSRF (IMPORTANT POUR RAILWAY)
+# =========================
 
-# Applications
+CSRF_TRUSTED_ORIGINS = [
+    "https://gestion-stock-production-aed7.up.railway.app",
+    "https://*.railway.app",
+]
+
+# =========================
+# APPLICATIONS
+# =========================
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -20,6 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'produits',
 ]
+
+# =========================
+# MIDDLEWARE
+# =========================
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -33,6 +55,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'gestion_stock.urls'
+
+# =========================
+# TEMPLATES
+# =========================
 
 TEMPLATES = [
     {
@@ -51,6 +77,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gestion_stock.wsgi.application'
 
+# =========================
+# DATABASE (Railway PostgreSQL recommandé)
+# =========================
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -58,29 +88,45 @@ DATABASES = {
     }
 }
 
+# =========================
+# PASSWORD VALIDATION
+# =========================
+
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
+
+# =========================
+# INTERNATIONALIZATION
+# =========================
 
 LANGUAGE_CODE = 'fr'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
+# =========================
+# STATIC FILES
+# =========================
+
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# =========================
+# LOGIN
+# =========================
 
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+# =========================
+# SECURITY HEADERS (RAILWAY)
+# =========================
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
