@@ -1,0 +1,18 @@
+{% extends "produits/base.html" %}
+
+
+{% block content %}
+
+<div class="w-full">
+    <h2 class="text-xl font-bold mb-4">Modifier la catégorie</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {{ form.nom }}
+            <button type="submit" class="btn btn-primary w-full">Enregistrer</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

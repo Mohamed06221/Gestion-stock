@@ -1,0 +1,20 @@
+{% extends "produits/base.html" %}
+{% include "produits/pagination.html" %}
+
+{% block content %}
+
+<div class="w-full">
+    <h2 class="text-xl font-bold mb-4">Ajouter une entrée de stock</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="space-y-4">
+            {{ form.produit }}
+            {{ form.quantite }}
+            <button type="submit" class="btn btn-primary w-full">Enregistrer</button>
+            <a href="{% url 'liste_entrees' %}" class="btn btn-ghost w-full btn btn-error"">Annuler</a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

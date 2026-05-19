@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5/themes.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="flex justify-center items-center h-screen">
+        <div class="flex flex-col w-96 bg-base-200 rounded-xl p-8 space-y-6 shadow-xl">
+            
+            <div class="text-center">
+                <h1 class="text-3xl font-bold">🏪 Gestion Stock</h1>
+                <p class="text-sm opacity-60 mt-1">Créer un compte</p>
+            </div>
+
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+               {% if form.errors %}
+                    <div class="alert alert-error space-y-1">
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <p> {{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <p> {{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold">Nom d'utilisateur</label>
+                    <input type="text" name="username" class="input input-bordered w-full" placeholder="Nom d'utilisateur" required>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold">Mot de passe</label>
+                    <input type="password" name="password1" class="input input-bordered w-full" placeholder="Mot de passe" required>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-sm font-semibold">Confirmer mot de passe</label>
+                    <input type="password" name="password2" class="input input-bordered w-full" placeholder="Confirmer mot de passe" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full mt-2">S'inscrire</button>
+            </form>
+
+            <p class="text-center text-sm">Déjà un compte ? 
+                <a href="{% url 'login' %}" class="text-primary font-semibold">Se connecter</a>
+            </p>
+
+        </div>
+    </div>
+</body>
+</html>
