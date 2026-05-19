@@ -35,7 +35,7 @@
             {% if request.user.is_staff %}
             <div class="flex flex-col gap-2 mt-1">
                 <a href="{% url 'modifier_produit' produit.id %}" class="btn btn-primary btn-sm w-full">Modifier</a>
-                <a href="{% url 'supprimer_produit' produit.id %}" class="btn btn-error btn-sm w-full">Supprimer</a>
+                <a href="{% url 'supprimer_produit' produit.id %}" class="btn btn-ghost w-full btn btn-error"">Supprimer</a>
             </div>
             {% endif %}
 
