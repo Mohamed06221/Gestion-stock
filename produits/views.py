@@ -1,12 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .forms import ProduitForm, CategorieForm, EntreeStockForm, SortiStockForm
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm , SetPasswordForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+
 
 @login_required
 def liste_produit(request):
@@ -233,3 +234,18 @@ def toggle_admin(request, id):
         utilisateur.is_staff = not utilisateur.is_staff
         utilisateur.save()
         return redirect('liste_utilisateurs')
+
+
+@login_required
+def changer_mot_de_passe(request, id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    utilisateur = get_object_or_404(User, id=id)
+    if request.method == 'POST':
+        form = SetPasswordForm(utilisateur, request.POST) 
+        if form.is_valid():
+            form.save()
+            return redirect('liste_utilisateurs')
+    else:
+        form = SetPasswordForm(utilisateur)
+    return render(request, 'produits/changer_mot_de_passe.html', {'form': form, 'utilisateur': utilisateur})

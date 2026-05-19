@@ -46,6 +46,7 @@
                     {% endif %}
                 </form>
                 <a href="{% url 'supprimer_utilisateur' u.id %}" class="btn btn-error btn-sm">Supprimer</a>
+                <a href="{% url 'changer_mot_de_passe' u.id %}" class="btn btn-warning btn-sm">Mot de passe</a>
             </div>
             {% endif %}
         </div>

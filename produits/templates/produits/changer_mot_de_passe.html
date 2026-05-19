@@ -1,0 +1,36 @@
+{% extends "produits/base.html" %}
+
+{% block content %}
+
+<div class="w-full">
+    <h2 class="text-xl font-bold mb-4">Changer le mot de passe de {{ utilisateur.username }}</h2>
+    
+    <form method="post" class="space-y-4">
+        {% csrf_token %}
+
+        {% if form.errors %}
+        <div class="alert alert-error">
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <div class="space-y-1">
+            <label class="text-sm font-semibold">Nouveau mot de passe</label>
+            <input type="password" name="new_password1" class="input input-bordered w-full" placeholder="Nouveau mot de passe" required>
+        </div>
+
+        <div class="space-y-1">
+            <label class="text-sm font-semibold">Confirmer mot de passe</label>
+            <input type="password" name="new_password2" class="input input-bordered w-full" placeholder="Confirmer mot de passe" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-full">Enregistrer</button>
+        <a href="{% url 'liste_utilisateurs' %}" class="btn btn-ghost w-full btn btn-error"">Annuler</a>
+    </form>
+</div>
+
+{% endblock %}
