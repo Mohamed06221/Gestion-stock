@@ -7,7 +7,10 @@ SECRET_KEY = 'django-insecure-change-me-in-production'
 DEBUG = True
 
 # IMPORTANT FIX RAILWAY
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.railway.app']
+CSRF_TRUSTED_ORIGINS = [
+    "https://gestion-stock-production-aed7.up.railway.app",
+]
 
 # Applications
 INSTALLED_APPS = [
