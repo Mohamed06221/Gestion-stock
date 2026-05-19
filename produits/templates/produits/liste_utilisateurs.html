@@ -1,30 +1,30 @@
 {% extends "produits/base.html" %}
 
-
 {% block content %}
 
 <div class="w-full bg-base-200">
 
-            <form method="GET" class="mb-4 flex gap-2">
-                <input type="text" name="q" value="{{ recherche }}"
-                    class="input input-bordered w-full"
-                    placeholder="Rechercher...">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
-                {% if recherche %}
-                    <a href="." class="btn btn-ghost">Effacer</a>
-                {% endif %}
-            </form>
+    <form method="GET" class="mb-4 flex gap-2">
+        <input type="text" name="q" value="{{ recherche }}"
+            class="input input-bordered w-full"
+            placeholder="Rechercher...">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        {% if recherche %}
+            <a href="." class="btn btn-ghost">Effacer</a>
+        {% endif %}
+    </form>
 
-            {% if request.user.is_superuser %}
-            <div class="mb-4">
-                <a href="{% url 'ajouter_utilisateur' %}" class="btn btn-primary w-full">Ajouter un employé</a>
-            </div>
-{% endif %}
+    {% if request.user.is_superuser %}
+    <div class="mb-4">
+        <a href="{% url 'ajouter_utilisateur' %}" class="btn btn-primary w-full">Ajouter un employé</a>
+    </div>
+    {% endif %}
 
     <div class="space-y-4 w-full">
         {% for u in utilisateurs %}
-        <div class="user-item p-4 bg-base-100 rounded-lg w-full flex justify-between items-center">
-            <div class="space-y-1">
+        <div class="user-item p-4 bg-base-100 rounded-lg w-full flex flex-col gap-2">
+            
+            <div class="flex justify-between items-center">
                 <p class="font-bold text-lg nom-user">{{ u.username }}</p>
                 {% if u.is_superuser %}
                     <p class="badge badge-soft badge-error">Propriétaire</p>
@@ -36,7 +36,7 @@
             </div>
 
             {% if u != request.user and not u.is_superuser %}
-            <div class="flex gap-2">
+            <div class="flex flex-wrap gap-2">
                 <form method="post" action="{% url 'toggle_admin' u.id %}">
                     {% csrf_token %}
                     {% if u.is_staff %}
@@ -45,16 +45,16 @@
                         <button type="submit" class="btn btn-primary btn-sm">Promouvoir</button>
                     {% endif %}
                 </form>
-                <a href="{% url 'supprimer_utilisateur' u.id %}" class="btn btn-error btn-sm">Supprimer</a>
                 <a href="{% url 'changer_mot_de_passe' u.id %}" class="btn btn-warning btn-sm">Mot de passe</a>
+                <a href="{% url 'supprimer_utilisateur' u.id %}" class="btn btn-error btn-sm">Supprimer</a>
             </div>
             {% endif %}
+
         </div>
         {% endfor %}
     </div>
 </div>
 
-{% include "produits/pagination.html" %} 
-
+{% include "produits/pagination.html" %}
 
 {% endblock %}

@@ -4,53 +4,38 @@
 
 <div class="w-full bg-base-200 p-4">
 
-            <form method="GET" class="mb-4 flex gap-2">
-                <input type="text" name="q" value="{{ recherche }}"
-                    class="input input-bordered w-full"
-                    placeholder="Rechercher...">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
-                {% if recherche %}
-                    <a href="." class="btn btn-ghost">Effacer</a>
-                {% endif %}
-            </form>
+    <form method="GET" class="mb-4 flex gap-2">
+        <input type="text" name="q" value="{{ recherche }}"
+            class="input input-bordered w-full"
+            placeholder="Rechercher...">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        {% if recherche %}
+            <a href="." class="btn btn-ghost">Effacer</a>
+        {% endif %}
+    </form>
 
-    <!-- ➕ Ajouter -->
     <div class="mb-4">
         <a href="{% url 'ajouter_entree' %}" class="btn btn-primary w-full">
             Ajouter une entrée
         </a>
     </div>
 
-    <!-- 📦 LISTE (même structure que sorties) -->
     <div class="space-y-4 w-full">
-
         {% for entree in page_obj %}
-        <div class="entree-item p-4 bg-base-100 rounded-lg w-full flex justify-between items-center">
+        <div class="entree-item p-4 bg-base-100 rounded-lg w-full flex flex-col gap-2">
 
-            <div class="space-y-2">
-                <p class="font-bold text-lg nom-produit">
-                    {{ entree.produit.nom }}
-                </p>
+            <p class="font-bold text-lg nom-produit">{{ entree.produit.nom }}</p>
 
-                <div class="flex gap-2">
-                    <p class="badge badge-soft badge-primary">
-                        {{ entree.quantite }} unités reçues
-                    </p>
-
-                    <p class="badge badge-dash badge-primary">
-                        {{ entree.date }}
-                    </p>
-                </div>
+            <div class="flex flex-wrap gap-2">
+                <p class="badge badge-soft badge-primary">{{ entree.quantite }} unités reçues</p>
+                <p class="badge badge-dash badge-primary">{{ entree.date }}</p>
             </div>
 
         </div>
         {% endfor %}
-
     </div>
 </div>
 
-
 {% include "produits/pagination.html" %}
-
 
 {% endblock %}

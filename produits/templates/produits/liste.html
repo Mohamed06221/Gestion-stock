@@ -3,49 +3,49 @@
 {% block content %}
 
 <div class="w-full bg-base-200">
-    
-            <form method="GET" class="mb-4 flex gap-2">
-                <input type="text" name="q" value="{{ recherche }}"
-                    class="input input-bordered w-full"
-                    placeholder="Rechercher...">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
-                {% if recherche %}
-                    <a href="." class="btn btn-ghost">Effacer</a>
-                {% endif %}
-            </form>
+
+    <form method="GET" class="mb-4 flex gap-2">
+        <input type="text" name="q" value="{{ recherche }}"
+            class="input input-bordered w-full"
+            placeholder="Rechercher...">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+        {% if recherche %}
+            <a href="." class="btn btn-ghost">Effacer</a>
+        {% endif %}
+    </form>
 
     {% if request.user.is_staff %}
-        <div class="mb-4">
-            <a href="{% url 'ajouter_produit' %}" class="btn btn-primary w-full">Ajouter un produit</a>
-        </div>
+    <div class="mb-4">
+        <a href="{% url 'ajouter_produit' %}" class="btn btn-primary w-full">Ajouter un produit</a>
+    </div>
     {% endif %}
 
     <div class="space-y-4 w-full">
         {% for produit in produits %}
-        <div class="produit-item p-4 bg-base-100 rounded-lg w-full flex justify-between items-center">
-            <div class="space-y-2">
+        <div class="produit-item p-4 bg-base-100 rounded-lg w-full flex flex-col gap-2">
+
+            <div class="flex justify-between items-center">
                 <p class="font-bold text-lg nom-produit">{{ produit.nom }}</p>
                 <p class="badge badge-soft badge-primary">{{ produit.categorie }}</p>
-                <div class="flex gap-2">
-                    <p class="badge badge-soft badge-primary">{{ produit.quantite }} en stock</p>
-                    <p class="badge badge-dash badge-primary">{{ produit.prix }} FCFA</p>
-                </div>
             </div>
-            <div class="space-x-2">
-                {% if request.user.is_staff %}
-                    <a href="{% url 'modifier_produit' produit.id %}" class="btn btn-primary btn-sm">Modifier</a>
-                    <a href="{% url 'supprimer_produit' produit.id %}" class="btn btn-error btn-soft btn-sm">Supprimer</a>
-                {% endif %}
+
+            <div class="flex flex-wrap gap-2">
+                <p class="badge badge-soft badge-primary">{{ produit.quantite }} en stock</p>
+                <p class="badge badge-dash badge-primary">{{ produit.prix }} FCFA</p>
             </div>
+
+            {% if request.user.is_staff %}
+            <div class="flex gap-2">
+                <a href="{% url 'modifier_produit' produit.id %}" class="btn btn-primary btn-sm w-full">Modifier</a>
+                <a href="{% url 'supprimer_produit' produit.id %}" class="btn btn-error btn-sm w-full">Supprimer</a>
+            </div>
+            {% endif %}
+
         </div>
         {% endfor %}
     </div>
 </div>
 
-{% include "produits/pagination.html" %} 
-
-
-
-
+{% include "produits/pagination.html" %}
 
 {% endblock %}
